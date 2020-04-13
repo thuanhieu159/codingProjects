@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Stopwatch Application </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj-wVFJ1-LdkCKdicuMIxkmOQBzWOR7cE&callback=initMap">
+</script>
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<section id = "stopWatch"> <p id = "timer"> 00:00.000 </p> </section>
+<button type="button" class="btn btn-primary btn-lg" id = "start" onclick="start();" >Start</button>
+<button type="button" class="btn btn-primary btn-lg" id = "stop" onclick="stop();">Stop</button>
+<button type="button" class="btn btn-primary btn-lg" id = "reset" onclick="reset();">Reset</button>
+
+
+<div class= "table-responsive">
+<table id="table1" class="table table-sm table-dark">
+	<thead>
+    <tr>
+      <th scope="col">Start Time</th>
+      <th scope="col">Start Latitude, Longtitude</th>
+      <th scope="col">timeZoneBefore</th>
+      <th scope="col">End Time</th>
+      <th scope="col">End Latitude,Longtitude</th>
+      <th scope="col"> Time Elapsed </th>
+      <th scope="col">timeZoneAfter</th>
+    </tr>
+  </thead>
+</table>
+ 
+</div>
+
+<!-- I put this last for everything to take effect-->
+<script type="text/javascript" src="stopwatchFunctionality.js"></script>
+<script type="text/javascript" src="localStorage.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JS Calculator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+	<style>
+		#display {
+			font-size: 2em;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<h1 class="col-12 text-center mt-5">JS Calculator</h1>
+		</div> <!-- .row -->
+		<div class="row">
+			<div id="calculator" class="mt-4 col-12 col-md-6 ml-md-auto mr-md-auto col-lg-4">
+				<div class="row">
+					<input type="text" id="display" class="col-12 text-right form-control" value="OFF" disabled>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-6 btn btn-lg btn-outline-dark">ON / OFF</button>
+					<button class="col-6 btn btn-lg btn-outline-dark">AC</button>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-3 btn btn-lg btn-outline-dark">7</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">8</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">9</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">/</button>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-3 btn btn-lg btn-outline-dark">4</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">5</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">6</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">x</button>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-3 btn btn-lg btn-outline-dark">1</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">2</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">3</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">-</button>
+				</div> <!-- .row -->
+				<div class="row">
+					<button class="col-3 btn btn-lg btn-outline-dark">0</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">.</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">=</button>
+					<button class="col-3 btn btn-lg btn-outline-dark">+</button>
+				</div> <!-- .row -->
+			</div> <!-- #calculator -->
+		</div> <!-- .row -->
+	</div> <!-- .container -->
+
+<script>
+	let inputText = "";
+	let inputTextNext = "";
+	let state = "";
+	let previousNumber = 0.0;
+	let nextNumber = 0.0;
+	let calculatorOn = false;
+	document.onclick = function(event){
+	//	console.log(event.target.innerHTML);
+		if(event.target.innerHTML == "ON / OFF")
+		{
+			if(calculatorOn == false)
+			{
+				calculatorOn = true;
+				document.querySelector("#display").value = "0";
+			}
+			else
+			{
+				calculatorOn = false;
+				document.querySelector("#display").value = "OFF";
+			}
+		}
+			//-------------------------
+		if(calculatorOn == true)
+	{
+			if(event.target.innerHTML == "=")
+			{
+				nextNumber = parseFloat(inputTextNext);
+				if(state == "plus")
+				{
+					// console.log("THis is previousNumber " + previousNumber);
+					// console.log("THis is nextNumber " + nextNumber);
+					document.querySelector("#display").value = (previousNumber + nextNumber)
+					console.log(document.querySelector("#display"));
+					previousNumber += nextNumber;
+					nextNumber = 0;
+					state = "";
+					inputText = previousNumber.toString();
+					// console.log(inputText);
+					inputTextNext = "";
+				}
+				else if(state == "minus")
+				{
+					document.querySelector("#display").value = (previousNumber - nextNumber);
+					 console.log(previousNumber - nextNumber);
+					previousNumber -= nextNumber;
+					nextNumber = 0;
+					state = "";
+					inputText = previousNumber.toString();
+					// console.log(inputText);
+					inputTextNext = "";
+				}
+				else if(state == "multiply")
+				{
+					document.querySelector("#display").value = (previousNumber * nextNumber);
+					console.log(previousNumber * nextNumber);
+					previousNumber *= nextNumber;
+					nextNumber = 0;
+					state = "";
+					inputText = previousNumber.toString();
+					// console.log(inputText);
+					inputTextNext = "";
+				}
+				else if(state == "divide")
+				{	
+					document.querySelector("#display").value = (previousNumber / nextNumber);
+					console.log(previousNumber / nextNumber);
+					previousNumber /= nextNumber;
+					nextNumber = 0;
+					state = "";
+					inputText = previousNumber.toString();
+					// console.log(inputText);
+					inputTextNext = "";
+				}
+				else
+				{
+					console.log(previousNumber);
+				}
+			} // End if "="
+			if (event.target.innerHTML == "AC")
+			{
+				inputText = "";
+				inputTextNext = "";
+				state = "";
+				previousNumber = 0.0;
+				nextNumber = 0.0;
+				document.querySelector("#display").value = 0;
+			}
+			
+			else
+			{
+				if(event.target.innerHTML == "+" && state == "")
+				{
+					previousNumber = parseFloat(inputText);
+					state = "plus";
+				}
+				else if(event.target.innerHTML == "-" && state == "")
+				{
+					previousNumber = parseFloat(inputText);
+					state = "minus";
+				}
+				else if(event.target.innerHTML == "x" && state == "")
+				{
+					previousNumber = parseFloat(inputText);
+			
+					state = "multiply";	
+				}
+				else if(event.target.innerHTML == "/" && state == "")
+				{
+					previousNumber = parseFloat(inputText);
+				
+					state = "divide"
+				}
+				else if (state != "" )
+				{
+					if(!isNaN(event.target.innerHTML)) //Is a number
+					{
+					inputTextNext += event.target.innerHTML;
+					document.querySelector("#display").value = inputTextNext;
+					console.log("THis is inputTextNext " + inputTextNext);
+					}
+					if(event.target.innerHTML == ".")
+					{
+					inputTextNext += event.target.innerHTML;
+					document.querySelector("#display").value = inputTextNext;
+					console.log("THis is inputTextNext " + inputTextNext);
+					}
+					
+				}
+				else if (state == "")
+				{
+					if(!isNaN(event.target.innerHTML)) //Is a number
+					{
+					inputText += event.target.innerHTML;
+					document.querySelector("#display").value = inputText;
+					console.log("THis is inputText " + inputText);
+					}
+					if(event.target.innerHTML == ".")
+					{
+					inputText += event.target.innerHTML;
+					document.querySelector("#display").value = inputText;
+					console.log("THis is inputText " + inputText);
+					}
+				}
+//Cover cases of multiple operation
+				
+///Cover multiple cases
+				// else if( state == "plus")
+				// {
+				// 	document.querySelector("#display").value = (previousNumber + nextNumber)
+				// 	console.log(document.querySelector("#display"));
+				// 	previousNumber += nextNumber;
+				// 	nextNumber = 0;
+				// 	state = "";
+				// 	inputText = previousNumber.toString();
+				// 	// console.log(inputText);
+				// 	inputTextNext = "";
+				// }
+				// else if( state == "minus")
+				// {
+				// 	document.querySelector("#display").value = (previousNumber - nextNumber)
+				// 	console.log(document.querySelector("#display"));
+				// 	previousNumber -= nextNumber;
+				// 	nextNumber = 0;
+				// 	state = "";
+				// 	inputText = previousNumber.toString();
+				// 	// console.log(inputText);
+				// 	inputTextNext = "";
+				// }
+				// else if( state == "multiply")
+				// {
+				// 	document.querySelector("#display").value = (previousNumber * nextNumber)
+				// 	console.log(document.querySelector("#display"));
+				// 	previousNumber *= nextNumber;
+				// 	nextNumber = 0;
+				// 	state = "";
+				// 	inputText = previousNumber.toString();
+				// 	// console.log(inputText);
+				// 	inputTextNext = "";
+				// }
+				// else if( state == "divide")
+				// {
+				// 	document.querySelector("#display").value = (previousNumber / nextNumber)
+				// 	console.log(document.querySelector("#display"));
+				// 	previousNumber /= nextNumber;
+				// 	nextNumber = 0;
+				// 	state = "";
+				// 	inputText = previousNumber.toString();
+				// 	// console.log(inputText);
+				// 	inputTextNext = "";
+				// }
+				///End cover mutliple cases
+			
+		}
+	}
+		///--------------------
+	} // End of onclick
+
+	document.onkeydown = function(event){
+		if(event.key == " ")
+		{
+			if(calculatorOn == false)
+			{
+				calculatorOn = true;
+				document.querySelector("#display").value = "0";
+			}
+			else
+			{
+				calculatorOn = false;
+				document.querySelector("#display").value = "OFF";
+			}
+		}
+	}
+
+</script>
+
+</body>
+</html>
+
+	if(event.target.innerHTML == "=")
+			{
+				nextNumber = parseFloat(inputTextNext);
+				if(state == "plus")
+				{
+					// console.log("THis is previousNumber " + previousNumber);
+					// console.log("THis is nextNumber " + nextNumber);
+					document.querySelector("#display").value = (previousNumber + nextNumber)
+					console.log(document.querySelector("#display"));
+					previousNumber += nextNumber;
+					nextNumber = 0;
+					state = "";
+					inputText = previousNumber.toString();
+					// console.log(inputText);
+					inputTextNext = "";
+				}
+				else if(state == "minus")
+				{
+					document.querySelector("#display").value = (previousNumber - nextNumber);
+					 console.log(previousNumber - nextNumber);
+					previousNumber -= nextNumber;
+					nextNumber = 0;
+					state = "";
+					inputText = previousNumber.toString();
+					// console.log(inputText);
+					inputTextNext = "";
+				}
+				else if(state == "multiply")
+				{
+					document.querySelector("#display").value = (previousNumber * nextNumber);
+					console.log(previousNumber * nextNumber);
+					previousNumber *= nextNumber;
+					nextNumber = 0;
+					state = "";
+					inputText = previousNumber.toString();
+					// console.log(inputText);
+					inputTextNext = "";
+				}
+				else if(state == "divide")
+				{	
+					document.querySelector("#display").value = (previousNumber / nextNumber);
+					console.log(previousNumber / nextNumber);
+					previousNumber /= nextNumber;
+					nextNumber = 0;
+					state = "";
+					inputText = previousNumber.toString();
+					// console.log(inputText);
+					inputTextNext = "";
+				}
+				else
+					console.log(previousNumber);
+
+				} else if (event.target.innerHTML == "AC")
+				{
+				let inputText = "";
+				let inputTextNext = "";
+				let state = "";
+				let previousNumber = 0.0;
+				let nextNumber = 0.0;
+				document.querySelector("#display").value = 0;
+				}
+			else
+			{
+				if(event.target.innerHTML == "+")
+				{
+					previousNumber = parseFloat(inputText);
+					
+					state = "plus";
+				}
+				else if(event.target.innerHTML == "-")
+				{
+					previousNumber = parseFloat(inputText);
+					
+					state = "minus";
+				}
+			else if(event.target.innerHTML == "x")
+			{
+					previousNumber = parseFloat(inputText);
+			
+					state = "multiply";	
+			}
+			else if(event.target.innerHTML == "/")
+			{
+					previousNumber = parseFloat(inputText);
+				
+					state = "divide"
+			}
+			else if (state != "")
+			{
+					document.querySelector("#display").value = inputTextNext;
+					inputTextNext += event.target.innerHTML;
+					console.log("THis is inputTextNext " + inputTextNext);
+			}
+			else if (state == "")
+			{
+					document.querySelector("#display").value = inputText;
+					inputText += event.target.innerHTML;
+					console.log("THis is inputText " + inputText);
+			}
+		}
